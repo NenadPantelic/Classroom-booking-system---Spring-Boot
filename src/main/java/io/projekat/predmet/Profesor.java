@@ -2,11 +2,18 @@ package io.projekat.predmet;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+@Entity
 public class Profesor {
-	
+	@Id
 	private int id;
 	private String ime;
 	private String tip;
+	
+	@OneToMany
 	private List<Smer> smerovi;
 	
 	
@@ -16,6 +23,12 @@ public class Profesor {
 		this.ime =ime;
 		this.tip = tip;
 		this.smerovi = smerovi;
+		
+		
+	}
+	
+	public Profesor()
+	{
 		
 		
 	}

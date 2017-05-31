@@ -15,7 +15,7 @@ import io.projekat.predmet.Smer;
 public class TerminService {
 	
 	@Autowired
-	public TerminRepository terminRepo;
+	private TerminRepository terminRepo;
 	
 	
 	public int addTermin(Termin termin){
@@ -124,10 +124,10 @@ public class TerminService {
 	}
 
 	
-	public void deleteTermin(String termin){
+	public void deleteTermin(String id){
 		
 		
-		terminRepo.delete(termin);
+		terminRepo.delete(id);
 		
 	}
 }

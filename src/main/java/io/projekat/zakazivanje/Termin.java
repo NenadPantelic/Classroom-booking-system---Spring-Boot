@@ -6,7 +6,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
+//import io.javabrains.api.topic.Topic;
 import io.projekat.predmet.Predmet;
 import io.projekat.predmet.Profesor;
 import io.projekat.predmet.Smer;
@@ -21,14 +25,20 @@ public class Termin {
 	private Date datum;
 	private String pocVreme;
 	private String krajnjeVreme;
-	private Predmet predmet;
+	
 	private String aktivnost;
+	
+	@Transient
 	private List<Smer> smerovi;
 	private String info;
 	private boolean visibility;
+	
+	@Transient
+	
 	private Profesor profesor;
 	
-	
+	@ManyToOne
+	private Predmet predmet;
 	
 	public Termin(String id, Date datumF, String pocVreme, String krajnjeVreme, Predmet predmet, String aktivnost,
 			List<Smer> smerovi, String info, boolean visibility, Profesor profesor) {
@@ -47,7 +57,10 @@ public class Termin {
 	}
 	
 	
-	
+	public Termin(){
+		
+		
+	}
 	
 	
 	
