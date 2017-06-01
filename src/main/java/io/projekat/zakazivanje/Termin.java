@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -28,12 +29,15 @@ public class Termin {
 	
 	private String aktivnost;
 	
-	@Transient
+	@OneToMany
 	private List<Smer> smerovi;
 	private String info;
 	private boolean visibility;
 	
-	@Transient
+	@ManyToOne
+	private Sala sala;
+	
+	@ManyToOne
 	
 	private Profesor profesor;
 	
@@ -41,7 +45,7 @@ public class Termin {
 	private Predmet predmet;
 	
 	public Termin(String id, Date datumF, String pocVreme, String krajnjeVreme, Predmet predmet, String aktivnost,
-			List<Smer> smerovi, String info, boolean visibility, Profesor profesor) {
+			List<Smer> smerovi, String info,Sala sala, boolean visibility, Profesor profesor) {
 		super();
 		this.id = id;
 		this.datum = datumF;
@@ -53,14 +57,27 @@ public class Termin {
 		this.info = info;
 		this.visibility = visibility;
 		this.profesor = profesor;
+		this.sala = sala;
 		
 	}
 	
 	
-	public Termin(){
+public Termin(){
 		
 		
 	}
+	
+	public Sala getSala() {
+		return sala;
+	}
+
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+
+	
 	
 	
 	

@@ -130,4 +130,13 @@ public class TerminService {
 		terminRepo.delete(id);
 		
 	}
+	
+	public void updateTermin(Termin termin)
+	{
+		
+		terminRepo.save(termin);
+		
+		
+		
+	}
 }
