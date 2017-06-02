@@ -1,0 +1,43 @@
+{
+  "response": 1,
+  "datum": "Мај 31, 2017",
+  "datumF": "",
+  "pocetnoVreme": "09:35",
+  "pocetnoVremeF": "Wed May 10 2017 09:35:00 GMT+0200 (CEST)",
+  "vremeZavrsetka": "14:20",
+  "vremeZavrsetkaF": "Wed May 10 2017 14:20:00 GMT+0200 (CEST)",
+  "objekat": ["obj-a", "obj-b", "obj-d"],
+  "sadrziProjektor": true,
+  "brojRacunara": null,
+  "salaSaRacunarima": false,
+  "brojMesta": 100,
+  "dostupneSale": [
+    {
+      "id": "1",
+      "ime": "205",
+      "brojMesta": 120,
+      "objekat": "obj-d",
+      "projektor": true,
+      "salaSaRacunarima": false,
+      "brojRacunara": 0
+    },
+    {
+      "id": "2",
+      "ime": "Темпус",
+      "brojMesta": 110,
+      "objekat": "obj-a",
+      "projektor": true,
+      "salaSaRacunarima": true,
+      "brojRacunara": 30
+    },
+    {
+      "id": "3",
+      "ime": "Амфитеатар",
+      "brojMesta": "10",
+      "objekat": "obj-d",
+      "projektor": true,
+      "salaSaRacunarima": false,
+      "brojRacunara": 200
+    }
+  ]
+}

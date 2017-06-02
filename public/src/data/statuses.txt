@@ -1,0 +1,10 @@
+{
+  "datum": "Мај 10, 2017",
+  "pocetnoVreme": "10:40",
+  "vremeZavrsetka": "22:00",
+  "objekat": ["obj-a", "obj-b", "obj-c"],
+  "sadrziProjektor": true,
+  "brojRacunara": 341,
+  "salaSaRacunarima": false,
+  "brojMesta": 21
+}
