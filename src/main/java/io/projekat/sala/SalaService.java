@@ -14,9 +14,9 @@ public class SalaService {
 	public SalaService()
 	{
 		sveSale = new ArrayList<Sala>();
-		sveSale.add(new Sala("a-amfiteatar", "Amfiteatar", 90, Objekti.objekatD, true, true, 1));
-		sveSale.add(new Sala("a-119", "RTSI 1", 40, Objekti.objekatD, true, true, 1));
-		sveSale.add(new Sala("a-216", "RTSI 2", 40, Objekti.objekatD, true, true, 1));
+		sveSale.add(new Sala("d-amfiteatar", "Amfiteatar", 90, Objekti.objekatD, true, true, 1));
+		sveSale.add(new Sala("d-119", "RTSI 1", 40, Objekti.objekatD, true, true, 1));
+		sveSale.add(new Sala("d-216", "RTSI 2", 40, Objekti.objekatD, true, true, 1));
 		sveSale.add(new Sala("d-62", "Laboratorija za Elektrotehniku", 20, Objekti.objekatD, true, true, 20));
 		sveSale.add(new Sala("a-2-21", "TEMPUS veca", 40, Objekti.objekatA, true, true, 40));
 		sveSale.add(new Sala("a-1-19", "TEMPUS manja", 30, Objekti.objekatA, true, true, 30));
