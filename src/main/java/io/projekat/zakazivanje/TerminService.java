@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.projekat.Response;
 import io.projekat.predmet.Predmet;
 import io.projekat.predmet.Profesor;
 import io.projekat.predmet.Smer;
@@ -107,9 +108,9 @@ public class TerminService {
 		}
 		
 		
-		int odgovor = (odobrenje == true)?1:0;
+		int odgovor = (odobrenje == true)?Response.SUCCESS:Response.FAIL;
 		
-		if (odgovor == 1)
+		if (odgovor == Response.SUCCESS)
 		{
 			terminRepo.save(termin);
 			return odgovor;
@@ -118,7 +119,7 @@ public class TerminService {
 		}
 		
 		else 
-			return 0;
+			return Response.FAIL;
 		
 		
 	}
@@ -138,5 +139,16 @@ public class TerminService {
 		
 		
 		
+	}
+
+
+	public List<Termin> getTermini() {
+		
+		return (List<Termin>) terminRepo.findAll();
+	}
+	
+	public List<Termin> getTerminiByDatum(Date datumF)
+	{
+		return (List<Termin>) terminRepo.findByDatum(datumF);
 	}
 }

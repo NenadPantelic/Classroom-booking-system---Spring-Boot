@@ -1,4 +1,4 @@
-package io.projekat.zakazivanje;
+package io.projekat.sala;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -2,9 +2,10 @@ package io.projekat.pretraga;
 import java.util.Date;
 import java.util.List;
 
-import io.projekat.zakazivanje.Sala;
+import io.projekat.CitljivTerminIntervalInterfaceString;
+import io.projekat.sala.Sala;
 
-public class PretragaUpit {
+public class PretragaUpit implements CitljivTerminIntervalInterfaceString {
 	private int response;
 	
 	private String datum;
@@ -125,5 +126,10 @@ public class PretragaUpit {
 
 	public void setVremeZavrsetkaF(Date vremeZavrsetkaF) {
 		this.vremeZavrsetkaF = vremeZavrsetkaF;
+	}
+
+	@Override
+	public String getKrajnjeVreme() {
+		return getVremeZavrsetka();
 	}
 }

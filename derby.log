@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Thu Jun 01 09:26:22 CEST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015c-628c-50ce-0000038ee590 
-on database directory memory:/home/nenadsi/SpringBoot/demo/testdb with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
-Loaded from file:/home/nenadsi/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+Fri Jun 02 23:54:48 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015c-6acd-c157-000009e69db0 
+on database directory memory:/home/konda/Development/workspace-sts-3.8.4.RELEASE/DemoSpringBoot/testdb with class loader sun.misc.Launcher$AppClassLoader@3d4eac69 
+Loaded from file:/home/konda/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_121-b13
-user.dir=/home/nenadsi/SpringBoot/demo
+java.runtime.version=1.8.0_131-8u131-b11-0ubuntu1.16.04.2-b11
+user.dir=/home/konda/Development/workspace-sts-3.8.4.RELEASE/DemoSpringBoot
 os.name=Linux
 os.arch=amd64
-os.version=3.16.0-77-generic
+os.version=4.4.0-78-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

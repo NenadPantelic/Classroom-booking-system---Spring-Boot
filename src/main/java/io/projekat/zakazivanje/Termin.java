@@ -8,16 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
+import io.projekat.CitljivTerminIntervalInterfaceString;
 //import io.javabrains.api.topic.Topic;
 import io.projekat.predmet.Predmet;
 import io.projekat.predmet.Profesor;
 import io.projekat.predmet.Smer;
+import io.projekat.sala.Sala;
 
 @Entity
-public class Termin {
+public class Termin implements CitljivTerminIntervalInterfaceString {
 	
 	
 	@Id
@@ -140,6 +140,12 @@ public Termin(){
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+
+	@Override
+	public String getPocetnoVreme() {
+		return getPocVreme();
 	}
 	
 	
