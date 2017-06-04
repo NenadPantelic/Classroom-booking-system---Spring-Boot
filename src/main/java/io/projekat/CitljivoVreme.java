@@ -13,6 +13,8 @@ public class CitljivoVreme {
 	
 	public CitljivoVreme(String vreme)
 	{
+		if(!vreme.matches("^\\d{2}(?::\\d{2}){1,2}"))
+			throw new IllegalArgumentException("Vreme mora biti u obliku HH:MM. Dobijeno vreme: '" + vreme + "'");
 		sati = Integer.parseInt(vreme.substring(0, 2));
 		minuti = Integer.parseInt(vreme.substring(3, 5));
 	}
@@ -75,7 +77,7 @@ public class CitljivoVreme {
 	
 	public String toString()
 	{
-		return Integer.toString(sati) + ":" + Integer.toString(minuti);
+		return String.format("%02d", sati) + ":" + String.format("%02d", minuti);
 	}
 	
 }

@@ -14,7 +14,7 @@ public class CitljivoVremeInterval {
 	public CitljivoVremeInterval(CitljivoVreme pocetnoVreme, CitljivoVreme krajnjeVreme)
 	{
 		if(pocetnoVreme.isGreaterThan(krajnjeVreme))
-			throw new IllegalArgumentException("Pocetno vreme ne sme biti vece od vremena zavrsetka.");
+			throw new IllegalArgumentException("Pocetno vreme ne sme biti vece od vremena zavrsetka. Dobijen interval: " + uString(pocetnoVreme, krajnjeVreme));
 		this.pocetnoVreme = pocetnoVreme;
 		this.krajnjeVreme = krajnjeVreme;
 	}
@@ -53,6 +53,21 @@ public class CitljivoVremeInterval {
 	
 	public String toString()
 	{
+		return uString(this);
+	}
+	
+	public static String uString(CitljivoVreme pocetnoVreme, CitljivoVreme krajnjeVreme)
+	{
 		return "(" + pocetnoVreme + " - " + krajnjeVreme + ")";
+	}
+	
+	public static String uString(CitljivoVremeInterval interval)
+	{
+		return uString(interval.pocetnoVreme, interval.krajnjeVreme);
+	}
+	
+	public static String uString(String pocetnoVreme, String krajnjeVreme)
+	{
+		return uString(new CitljivoVreme(pocetnoVreme), new CitljivoVreme(krajnjeVreme));
 	}
 }
