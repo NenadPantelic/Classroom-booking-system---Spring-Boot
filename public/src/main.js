@@ -5,6 +5,8 @@ import routes from './router';
 
 import Form from './utilities/Form';
 window.Form = Form;
+window.base_url = "http://5.196.1.134:3000/"
+
 
 Vue.use(VueRouter);
 

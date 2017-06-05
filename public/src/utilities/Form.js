@@ -48,10 +48,12 @@ class Form {
      * .
      * @param {string} url
      */
-    post(url, data, emit, me) {
-        return this.submit('post', url, data, emit, me);
+    // post(url, data, emit, me) {
+    //     return this.submit('post', url, data, emit, me);
+    // }
+    post(url, data) {
+        return this.submit('post', url, data);
     }
-
 
     /**
      * Send a PUT request to the given URL.
@@ -90,25 +92,47 @@ class Form {
      * @param {string} url
      * @param {string} data
      */
-    submit(requestType, url, data = this.data(), emit, me) {
+  //  submit(requestType, url, data = this.data(), emit, me) {
+    submit(requestType, url, data = this.data()) {
 
-
-        $.getJSON(url, function (result) {
-            me.$emit(emit, result);
-        });
+        // $.getJSON(url, function (result) {
+        //     me.$emit(emit, result);
+        // });
         // $.ajax({
         //     url: url,
         //     type: requestType,
         //     dataType: "json",
         //     data: data,
         //     success: function (response) {
-        //         self.onSuccess(response);
+        //         me.$emit(emit, result);
+        //         //self.onSuccess(response);
         //
         //     },
         //     error: function(jqXHR, textStatus, errorThrown) {
         //         self.onFail(textStatus);
         //     }
         // });
+
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: url,
+                crossDomain: true,
+                headers: { 'Content-Type': 'application/json' },
+                type: requestType,
+                dataType: "json",
+                data: data,
+                success: function (response) {
+                    resolve(response);
+                    // self.onSuccess(response);
+                    // return response;
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    //reject(error.response.data);
+                    // self.onFail(textStatus);
+                }
+            });
+        });
     }
 
 

@@ -2,7 +2,7 @@
 <div class="ui stacked segment">
     <h2 class="ui olive ribbon label">Претражите доступну салу</h2>
 
-    <form class="ui form search-form"  @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+    <form class="ui form search-form" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
 
         <div class="two column row fields">
             <div class="column field">
@@ -22,9 +22,11 @@
                 <div class="ui calendar" id="start-time">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" placeholder="Почетно време" v-model="form.pocetnoVreme" id="pocetnoVreme" autocomplete="off">
+                        <input type="text" placeholder="Почетно време" v-model="form.pocetnoVreme" @click="form.errors.hideError('pocetnoVreme')"  id="pocetnoVreme" autocomplete="off">
                     </div>
                 </div>
+                <div class="ui pointing red basic label"  v-if="form.errors.has('pocetnoVreme')"  v-text="form.errors.get('pocetnoVreme')"></div>
+
             </div>
 
             <div class="column field">
@@ -32,9 +34,11 @@
                 <div class="ui calendar" id="end-time">
                     <div class="ui input left icon">
                         <i class="time icon"></i>
-                        <input type="text" placeholder="Време завршетка" v-model="form.vremeZavrsetka" id="vremeZavrsetka" autocomplete="off">
+                        <input type="text" placeholder="Време завршетка" v-model="form.vremeZavrsetka" @click="form.errors.hideError('vremeZavrsetka')" id="vremeZavrsetka" autocomplete="off">
                     </div>
                 </div>
+                <div class="ui pointing red basic label"  v-if="form.errors.has('vremeZavrsetka')"  v-text="form.errors.get('vremeZavrsetka')"></div>
+
             </div>
         </div>
 
@@ -82,7 +86,7 @@
             </div>
         </div>
 
-        <button type="submit" class="ui button" tabindex="2"  :disabled="form.errors.any()">Претражи</button>
+        <button type="submit" class="ui button" tabindex="2" :disabled="form.errors.any()">Претражи</button>
     </form>
 
 
@@ -128,11 +132,13 @@
         },
         methods: {
             onSubmit() {
-
+                var self = this;
                 var sendData = this.form;
                 var requiredFields = {
                     'datum': sendData.datum,
-                    'objekat': sendData.objekat
+                    'objekat': sendData.objekat,
+                    'pocetnoVreme': sendData.pocetnoVreme,
+                    'vremeZavrsetka': sendData.vremeZavrsetka,
                 };
 
                 sendData.checkIfEmpty(requiredFields);
@@ -140,17 +146,31 @@
                     delete sendData['originalData'];
                     delete sendData['errors'];
                     sendData['response'] = 1;
-                    this.form.post('src/data/statuses.json', sendData, 'searched', this);
-                     //   .then(result => this.$emit('searched', result));
+                    if(sendData['pocetnoVreme'].length === 4) sendData['pocetnoVreme'] = "0" + sendData['pocetnoVreme'];
+                    if(sendData['vremeZavrsetka'].length === 4) sendData['vremeZavrsetka'] = "0" + sendData['vremeZavrsetka'];
+
+
+                    this.form.post(base_url+'pretraga', JSON.stringify(sendData)).then(function(result) {
+                        self.slobodneSale.response = result.response;
+                        self.$emit('searched', result);
+
+                    }, function(reason) {
+                        console.log("rizon", reason);
+                    });
+
+
 
                 }
 
-                console.log(JSON.stringify(sendData));
+
 
 
             }
         },
         created: function() {
+
+
+
 
 
             //Inicijalizacija vrednosti nakon submitovanja

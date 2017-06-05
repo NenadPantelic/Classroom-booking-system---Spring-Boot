@@ -41,11 +41,11 @@
                     <div class="fields">
                         <div class="eight wide field">
                             <label>Предмет</label>
-                            <select class="ui fluid dropdown"  @change="form.errors.hideError('predmet')" v-model="form.predmet">
+                            <select class="ui fluid dropdown"  @change="form.errors.hideError('predmet');odrediSmerove();" v-model="form.predmet">
                                 <option value="">Изаберите предмет</option>
-                                <option value="ас">Архитектура рачунарских система</option>
-                                <option value="WY">Основи рачунарске технике 1</option>
-                                <option value="WY">Основи рачунарске технике 2</option>
+                                <option :value="predmet" v-for="predmet in podaciZaModal.predmeti">{{ predmet.ime }}</option>
+
+
                                 <!--<option v-for="objekat in objekti" v-bind:value="objekat.value">-->
                                     <!--{{ objekat.text }}-->
                                 <!--</option>-->
@@ -57,7 +57,7 @@
                         </div>
                         <div class="eight wide field">
                             <label>Тип</label>
-                            <select class="ui fluid dropdown" v-model="form.tip">
+                            <select @change="odrediSmerove();" class="ui fluid dropdown" v-model="form.aktivnost">
                                 <option value=""></option>
                                 <option value="p">Предавања</option>
                                 <option value="v">Вежбе</option>
@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <div class="ui bottom pointing red basic label small-top-push" v-if="form.errors.has('tip')" v-text="form.errors.get('tip')"></div>
+                            <div class="ui bottom pointing red basic label small-top-push" v-if="form.errors.has('aktivnost')" v-text="form.errors.get('aktivnost')"></div>
                         </div>
                     </div>
 
@@ -75,8 +75,9 @@
                     <div class="sixteen wide field">
                         <label>Смер / смерови:</label>
                         <select id="smer" name="smer" v-model="form.smerovi" class="ui fluid dropdown" multiple>
-                            <option value="RTSI">Рачунарска техника и софтверско инжењерство
-                            </option>
+                            <option value="">Изаберите смер</option>
+                            <option :value="smer" v-for="smer in smerovi">{{ smer.ime }}</option>
+
                         </select>
                         <!--<div class="ui pointing red basic label" v-if="form.errors.has('objekat')" v-text="form.errors.get('objekat')"></div>-->
                     </div>
@@ -128,15 +129,32 @@
         data: function() {
           return {
               form: new Form({
+                  id: this.podaciZaModal.id,
                   datum: this.podaciZaModal.datum,
                   datumF: this.podaciZaModal.datumF,
                   pocetnoVreme: '',
                   vremeZavrsetka: '',
-                  tip: '',
+
+
+                  aktivnost: '',
+
                   dodatneInformacije: '',
+                  info: '',
+                  sala: null,
                   predmet: '',
-                  smerovi: []
+                  smerovi: [],
+                  visibility: null,
+                  profesor: {
+                      id:1,
+                      ime:"Aleksandar Peulic",
+                      tip:"profesor",
+                      smerovi: [{
+                          ime:"Racunarska tehnika i softverkos inzenjerstvo",
+                          id:"1"
+                      }]
+                  }
               }),
+              smerovi: [],
               response: null
           }
         },
@@ -186,6 +204,7 @@
 
         },
         computed: {
+
             dobijeniOdgovor: function () {
                 if(this.response === 1) {
                     return 'Сала је успешно заказана';
@@ -198,11 +217,30 @@
             }
         },
         methods: {
+            odrediSmerove() {
+                var odabranPredmet = this.form.predmet.id;
+                for( var i=0; i<this.podaciZaModal["predmeti"].length; i++ ) {
+                    if(this.podaciZaModal["predmeti"][i]["id"] == odabranPredmet ) {
+                        this.smerovi = this.podaciZaModal["predmeti"][i]["smerovi"];
+                    }
+                }
+            },
             zakaziSalu() {
-                //@TODO Ajax zakazivanje this.form, procisti
-                console.log(this.form);
+
+
+                var self = this;
+
+
                 var sendDataModal = this.form;
-                console.log("sd", sendDataModal);
+
+                delete sendDataModal["originalData"];
+                sendDataModal["pocVreme"] = sendDataModal["pocetnoVreme"];
+                sendDataModal["krajnjeVreme"] = sendDataModal["vremeZavrsetka"];
+                sendDataModal["info"] = sendDataModal["dodatneInformacije"];
+                sendDataModal["datum"] = new Date(sendDataModal["datumF"] );
+                sendDataModal["ime"] = this.podaciZaModal["ime"];
+                sendDataModal["id"] = this.podaciZaModal["id"];
+
                 var requiredFields = {
                     'vremeZavrsetka': sendDataModal.vremeZavrsetka,
                     'pocetnoVreme': sendDataModal.pocetnoVreme,
@@ -210,19 +248,27 @@
                 };
                 sendDataModal.checkIfEmpty(requiredFields);
                 if(!this.form.errors.any()) {
+                    console.log(sendDataModal["id"]);
+                    var addonUrl = "sale/"+ sendDataModal["id"] +"/termini";
+                    this.form.post(base_url+addonUrl, JSON.stringify(sendDataModal)).then(function(result) {
 
-                    delete sendDataModal['originalData'];
-                    //delete sendDataModal['errors'];
-                    sendDataModal['response'] = 1;
-                    //this.form.post('src/data/statuses.json', sendData, 'searched', this);
-                    //   .then(result => this.$emit('searched', result));
+                        console.log("REZULTAT ZAKAZIVANJA", result);
+                        if(result === 1 || sendDataModal["id"] == "a-2-21") {
+                            sendDataModal['response'] = 1;
+                            self.response = 1;
+                        } else {
 
-                    this.response = 1;
-                    console.log(sendDataModal);
-                    console.log("je");
+                            self.response = 0;
+                        }
+
+                    }, function(reason) {
+                        console.log("rizon", reason);
+                    });
+
+
+
                 } else {
-                    console.log("ju");
-                    this.response = 0;
+                    self.response = 0;
                  }
             }
         }

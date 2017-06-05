@@ -20,10 +20,10 @@
                 <tbody>
                 <tr v-for="item in objA(slobodneSale.dostupneSale)">
                     <td class="sala-ime">{{ item.ime }}</td>
-                    <td>{{ item.brojMesta }}</td>
+                    <td>{{ item.brMesta }}</td>
                     <td>{{ item.sadrziProjektor ? 'Да':'Не'}}</td>
                     <td>{{ item.salaSaRacunarima ? 'Да':'Не' }}</td>
-                    <td>{{ item.brojRacunara }}</td>
+                    <td>{{ item.brRacunara }}</td>
                     <td>
                         <div class="ui animated teal button" @click="nastaviZakazivanje(item.id, item.ime)">
                             <div class="visible content">Закажите</div>
@@ -131,10 +131,10 @@
                 <tbody>
                 <tr v-for="item in objD(slobodneSale.dostupneSale)">
                     <td class="sala-ime">{{ item.ime }}</td>
-                    <td>{{ item.brojMesta }}</td>
+                    <td>{{ item.brMesta }}</td>
                     <td>{{ item.sadrziProjektor ? 'Да':'Не'}}</td>
                     <td>{{ item.salaSaRacunarima ? 'Да':'Не' }}</td>
-                    <td>{{ item.brojRacunara }}</td>
+                    <td>{{ item.brRacunara }}</td>
                     <td>
                         <div class="ui animated teal button" @click="nastaviZakazivanje(item.id, item.ime)">
                             <div class="visible content">Закажите</div>
@@ -169,10 +169,14 @@
         props: ['slobodneSale'],
         data(){
             return {
+                predmeti: new Form({
+
+                }),
                 zakazanaSala: {
                     id: null,
                     ime: null,
                     datum: this.slobodneSale.datum,
+                    datumF: this.slobodneSale.datumF,
                     pocetnoVreme: this.slobodneSale.pocetnoVreme,
                     pocetnoVremeF: this.slobodneSale.pocetnoVremeF,
                     vremeZavrsetkaF: this.slobodneSale.vremeZavrsetkaF,
@@ -182,13 +186,22 @@
         },
         computed: {
         },
+        created() {
+            var self = this;
+            this.predmeti.post(base_url+'predmeti', JSON.stringify({})).then(function(result) {
+                self.predmeti = result;
+                self.$emit('predmeti', result);
+            }, function(reason) {
+                console.log("rizon", reason);
+            });
+        },
         mounted() {
         },
         methods: {
             nastaviZakazivanje: function(id, ime) {
                 this.zakazanaSala["id"] = id;
                 this.zakazanaSala["ime"] = ime;
-
+                this.zakazanaSala["predmeti"] = this.predmeti;
                
                 $('.first.modal').modal('setting', 'transition', 'horizontal flip').modal('show');
             },
